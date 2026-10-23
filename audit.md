@@ -4,6 +4,15 @@
 
 **Generated:** 2026-10-23T02:47:19Z | **Head block:** 129243863 | **Window:** blocks 126488094..129078206
 
+**Addresses audited**
+
+| role | address |
+|---|---|
+| treasury (the buyback wallet) | `0x7C34E9e21eE28A49Ff0b84B61774119E6633359f` |
+| pool (PancakeSwap V3 FLAPJAX/WBNB, 1%) | `0xcA93EC685b8623688E6B236f9068034B298c2150` |
+| token (FLAPJAX, 18 decimals) | `0x90c8889f428F9EBB77BB8f15CAD3a50a9aC680df` |
+| quote token (WBNB, 18 decimals) | `0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c` |
+
 ## Verdict: all four announced rules were kept
 
 The treasury made **12 buyback swaps** in the window, spending **0.120000 BNB** for
@@ -135,12 +144,14 @@ Everything is public BSC state. No private data, no off-chain source.
    is the FLAPJAX out.
 2. **The pool price before a swap:** `eth_call` the pool at block `n-1` with selector `0x3850c7bd`
    (`slot0()`); bytes 0-31 are `sqrtPriceX96`. Then `(sqrtPriceX96 / 2**96) ** 2`.
-3. **The sell check:** `eth_getLogs` on FLAPJAX, `topics[0]` = Transfer
+3. **The sell check:** `eth_getLogs` on FLAPJAX
+   `0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df`, `topics[0]` = Transfer
    `0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef`, `topics[1]` = the
-   treasury, blocks 126488094..129078206. No result has the pool in `topics[2]`.
-4. **The completeness proof:** `balanceOf(treasury)` (`0x70a08231`) at blocks 126488093 and
-   129078206; the closure arithmetic above reproduces from those two calls plus the transfer
-   list.
+   treasury `0x7C34E9e21eE28A49Ff0b84B61774119E6633359f`, blocks 126488094..129078206. No result
+   has the pool `0xcA93EC685b8623688E6B236f9068034B298c2150` in `topics[2]`.
+4. **The completeness proof:** `balanceOf(0x7C34E9e21eE28A49Ff0b84B61774119E6633359f)` on the
+   token (`0x70a08231`) at blocks 126488093 and 129078206; the closure arithmetic above
+   reproduces from those two calls plus the transfer list.
 
 Public endpoints sufficed: `56.rpc.thirdweb.com` and `bsc-mainnet.public.blastapi.io` both serve
 historical state. `eth_getLogs` had to be chunked to 1000 blocks because every public endpoint
