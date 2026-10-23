@@ -1,108 +1,149 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FlapJax Receipt Relay Q41 - independent 14-day buyback audit</title>
+<title>FlapJax Q41 - independent buyback audit</title>
 <style>
-body{max-width:60rem;margin:2rem auto;padding:0 1rem;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:#1a1a1a}
-h1,h2,h3{line-height:1.25;margin-top:2rem}
-table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.86rem;display:block;overflow-x:auto}
-th,td{border:1px solid #ddd;padding:.4rem .5rem;text-align:left;vertical-align:top}
-th{background:#f6f6f6}
-code{background:#f2f2f2;padding:.1em .3em;border-radius:3px;font-size:.9em}
-pre{background:#f6f6f6;padding:1rem;overflow-x:auto;border-radius:4px;font-size:.85rem}
-a{color:#0b5fff}
-</style></head><body>
-<h1>FlapJax Receipt Relay Q41 - independent audit of the 14-day buyback (10-09 to 10-21)</h1>
-<p><strong>Auditor:</strong> cian-spider | <strong>BSC wallet:</strong> <code>0x7373E88368378052EB5a449d2eBC95aD7E5f2bEF</code> | <strong>Handle:</strong> cian-spider</p>
-<p><strong>Generated:</strong> 2026-10-23T02:47:19Z | <strong>Head block:</strong> 129243863 | <strong>Window:</strong> blocks 126488094..129078206</p>
-<p><strong>Addresses audited</strong></p>
-<table>
-<tr><th>role</th><th>address</th></tr>
-<tr><td>treasury (the buyback wallet)</td><td><code>0x7C34E9e21eE28A49Ff0b84B61774119E6633359f</code></td></tr>
-<tr><td>pool (PancakeSwap V3 FLAPJAX/WBNB, 1%)</td><td><code>0xcA93EC685b8623688E6B236f9068034B298c2150</code></td></tr>
-<tr><td>token (FLAPJAX, 18 decimals)</td><td><code>0x90c8889f428F9EBB77BB8f15CAD3a50a9aC680df</code></td></tr>
-<tr><td>quote token (WBNB, 18 decimals)</td><td><code>0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c</code></td></tr>
-</table>
-<h2>Verdict: all four announced rules were kept</h2>
-<p>The treasury made <strong>12 buyback swaps</strong> in the window, spending <strong>0.120000 BNB</strong> for <strong>284,418,120.15088177 FLAPJAX</strong>, and <strong>never sold FLAPJAX back into the pool</strong>. One programme day was missed: <strong>10-15</strong>.</p>
-<table>
-<tr><th>rule</th><th>verdict</th><th>evidence</th></tr>
-<tr><td>R1 - each buy spends 0.01 BNB</td><td><strong>KEPT</strong></td><td>all 12 in-window swaps carry exactly <code>10000000000000000</code> wei of <code>tx.value</code></td></tr>
-<tr><td>R2 - buy only, never sells into the pool</td><td><strong>KEPT</strong></td><td>0 of 281 outbound FLAPJAX transfers name the pool as recipient, and the transfer set is proven complete: balance residual <strong>0 wei</strong></td></tr>
-<tr><td>R3 - at most one buy per programme day, counted in COT</td><td><strong>KEPT</strong></td><td>12 buys on 12 distinct COT days; no COT day has two</td></tr>
-<tr><td>R4 - skip a buy that would leave the treasury under 0.025 BNB</td><td><strong>KEPT</strong></td><td>lowest post-buy BNB balance in the window is <strong>0.03615861</strong> (10-21), never below the floor</td></tr>
-</table>
-<h2>The 12 buyback swaps</h2>
-<p><code>pool price before</code> is PancakeSwap V3 <code>slot0.sqrtPriceX96</code> at block <code>n-1</code>. <code>effective price</code> is that swap's BNB in / FLAPJAX out.</p>
-<table>
-<tr><th>#</th><th>tx</th><th>block</th><th>UTC</th><th>COT</th><th>BNB in</th><th>FLAPJAX out</th><th>effective price</th><th>pool price before</th><th>premium</th></tr>
-<tr><td>1</td><td><a href="https://bscscan.com/tx/0xbeefabdc89f9148f9daaef6082d34a60dc5b4b612972ca0fd39d6bd4eb03b4b0"><code>0xbeefabdc..b4b0</code></a></td><td>126684151</td><td>2026-10-09T18:30:53Z</td><td>2026-10-09 13:30</td><td>0.010000</td><td>24,052,995.3083</td><td>4.157486e-10</td><td>4.109653e-10</td><td>1.164%</td></tr>
-<tr><td>2</td><td><a href="https://bscscan.com/tx/0x8ce8e8578da26f8c7acb0f44c6ca0d0b8dcba868cafe2d729bb48562863f2d62"><code>0x8ce8e857..2d62</code></a></td><td>126875701</td><td>2026-10-10T18:27:56Z</td><td>2026-10-10 13:27</td><td>0.010000</td><td>23,979,958.5574</td><td>4.170149e-10</td><td>4.122180e-10</td><td>1.164%</td></tr>
-<tr><td>3</td><td><a href="https://bscscan.com/tx/0x82d01172ae26f1c86287643e123af1675ca5c18b984b7740c1a0c1647d2801eb"><code>0x82d01172..01eb</code></a></td><td>127067713</td><td>2026-10-11T18:30:35Z</td><td>2026-10-11 13:30</td><td>0.010000</td><td>23,907,253.9656</td><td>4.182831e-10</td><td>4.134725e-10</td><td>1.163%</td></tr>
-<tr><td>4</td><td><a href="https://bscscan.com/tx/0x9afdc96e3ca876b5b617a26ba5105012ed8c33e805c77b1616bf48c198d5cbf1"><code>0x9afdc96e..cbf1</code></a></td><td>127261246</td><td>2026-10-12T18:46:27Z</td><td>2026-10-12 13:46</td><td>0.010000</td><td>23,834,879.5218</td><td>4.195532e-10</td><td>4.147290e-10</td><td>1.163%</td></tr>
-<tr><td>5</td><td><a href="https://bscscan.com/tx/0xc94de373d1fb00093431224a97475b3b2b48b9a4962d15acbe9d9c5c016d720c"><code>0xc94de373..720c</code></a></td><td>127452454</td><td>2026-10-13T18:41:15Z</td><td>2026-10-13 13:41</td><td>0.010000</td><td>23,762,833.2300</td><td>4.208252e-10</td><td>4.159873e-10</td><td>1.163%</td></tr>
-<tr><td>6</td><td><a href="https://bscscan.com/tx/0x172349c64ed3c45663650049f9e2ad3d763b1243c5c849b7d66f144f221d3186"><code>0x172349c6..3186</code></a></td><td>127643212</td><td>2026-10-14T18:32:29Z</td><td>2026-10-14 13:32</td><td>0.010000</td><td>23,691,113.1095</td><td>4.220992e-10</td><td>4.172476e-10</td><td>1.163%</td></tr>
-<tr><td>7</td><td><a href="https://bscscan.com/tx/0xc999000f16f326e8868fe37f83871219be1a63f98043b0aef9ee57f469232156"><code>0xc999000f..2156</code></a></td><td>128086717</td><td>2026-10-17T02:00:51Z</td><td>2026-10-16 21:00</td><td>0.010000</td><td>23,669,235.4659</td><td>4.224894e-10</td><td>4.176336e-10</td><td>1.163%</td></tr>
-<tr><td>8</td><td><a href="https://bscscan.com/tx/0x6ec66780e0518da7c3c8b55d13b66d57400046f89ebe9df479c3c878f7b3311f"><code>0x6ec66780..311f</code></a></td><td>128178495</td><td>2026-10-17T13:29:27Z</td><td>2026-10-17 08:29</td><td>0.010000</td><td>23,597,938.3497</td><td>4.237658e-10</td><td>4.188963e-10</td><td>1.162%</td></tr>
-<tr><td>9</td><td><a href="https://bscscan.com/tx/0x05a9acf81b0eae4b7ff9a12168aead25964b6b2c0a16d3d1e667b7db6f17ad99"><code>0x05a9acf8..ad99</code></a></td><td>128370339</td><td>2026-10-18T13:28:39Z</td><td>2026-10-18 08:28</td><td>0.010000</td><td>23,506,585.1567</td><td>4.254127e-10</td><td>4.205255e-10</td><td>1.162%</td></tr>
-<tr><td>10</td><td><a href="https://bscscan.com/tx/0xd5210869e5cec642146b3f39590647b313d102f70a51b7c7bbf0c287ceff095d"><code>0xd5210869..095d</code></a></td><td>128530306</td><td>2026-10-19T09:28:47Z</td><td>2026-10-19 04:28</td><td>0.010000</td><td>23,545,510.4210</td><td>4.247094e-10</td><td>4.198298e-10</td><td>1.162%</td></tr>
-<tr><td>11</td><td><a href="https://bscscan.com/tx/0xe9ea4a165aae8eb4228ef073a93c4c1983894104a426e9f5d64b0214cfde3369"><code>0xe9ea4a16..3369</code></a></td><td>128754269</td><td>2026-10-20T13:29:06Z</td><td>2026-10-20 08:29</td><td>0.010000</td><td>23,439,984.3303</td><td>4.266214e-10</td><td>4.217212e-10</td><td>1.162%</td></tr>
-<tr><td>12</td><td><a href="https://bscscan.com/tx/0xbf984ef91d8df34f75998aa40bb539db84085cc1f1654cd5106de7e3db0be48f"><code>0xbf984ef9..e48f</code></a></td><td>128946201</td><td>2026-10-21T13:29:29Z</td><td>2026-10-21 08:29</td><td>0.010000</td><td>23,429,832.7347</td><td>4.268063e-10</td><td>4.219041e-10</td><td>1.162%</td></tr>
-</table>
-<p><strong>Totals:</strong> 12 swaps, <strong>0.120000 BNB</strong> in, <strong>284,418,120.15088177 FLAPJAX</strong> out, weighted average <strong>4.219140e-10 BNB/FLAPJAX</strong>.</p>
-<h2>Programme days, counted in COT (UTC-5)</h2>
-<p>The rules count days in COT, which is not the chain's timezone. Two swaps fall on UTC dates that differ from their COT dates (<code>10-17T02:00:51Z</code> is <strong>10-16 21:00 COT</strong>; <code>10-17T13:29:27Z</code> is 10-17 08:29 COT), so a UTC-day tally would report a double buy on 10-17 and a phantom gap on 10-16. In COT there is exactly one buy per programme day except the one miss:</p>
-<ul>
-<li><strong>Days with a buy (12):</strong> 10-09, 10-10, 10-11, 10-12, 10-13, 10-14, 10-16, 10-17, 10-18, 10-19, 10-20, 10-21</li>
-<li><strong>Days missed (1):</strong> <strong>10-15</strong></li>
-<li>Programme days in window: 13</li>
-</ul>
-<p>The series is short by exactly one, and that one is 10-15 - consistent with the announced make-up buy on 10-23.</p>
-<h2>Did the treasury ever sell FLAPJAX back into the pool? No.</h2>
-<p>Zero of the <strong>281</strong> outbound FLAPJAX transfers in the window have the pool <code>0xcA93EC685b8623688E6B236f9068034B298c2150</code> as recipient. FLAPJAX only ever moved <em>from</em> the pool <em>to</em> the treasury, never the reverse.</p>
-<p>This rests on a completeness proof, not on a scan that happened to find nothing. A token balance is the running sum of every transfer that ever touched the account, so:</p>
-<pre>
-balance(treasury, block 126488093)  = 164,293,099.18645087 FLAPJAX
-+ inbound transfers in window      = 843,668,352.39972043
-- outbound transfers in window     = 185,090,000.00000000
-=                                    822,871,451.58617127
-balance(treasury, block 129078206) = 822,871,451.58617139
-residual                           = 0 wei
-</pre>
-<p>Residual is <strong>exactly 0 wei</strong>. Since the balance is a running sum, a zero residual means the 14 inbound and 281 outbound transfers are <em>all</em> the transfers that occurred - there is no room for a missed buy or a concealed sell. That is the difference between "I looked and saw no sells" and "the balance cannot hide one".</p>
-<h2>Everything that moved, including what is not a rule breach</h2>
-<p>The rules forbid <em>selling into the pool</em>. They do not forbid paying tokens out, and the treasury does pay out heavily. Both directions are listed so no reader has to wonder where tokens went.</p>
-<p><strong>Outbound: 184,590,000 FLAPJAX to 84 distinct addresses</strong> across 280 transfers in the window (plus one more of 500,000 just outside it). None to the pool, so no sale. The amounts are dominated by round 250,000 / 500,000 / 1,000,000 multiples, matching the announced 250,000-FLAPJAX answer reward, so this reads as the reward programme paying out.</p>
-<p><strong>Inbound: 14 transfers.</strong> Thirteen are the buy receipts above (12 in window plus one pre-window). The fourteenth is not a buy and is worth naming:</p>
-<table>
-<tr><th>tx</th><th>block</th><th>UTC</th><th>COT</th><th>FLAPJAX in</th><th>from</th></tr>
-<tr><td><a href="https://bscscan.com/tx/0x74700c92388f69796ca275bd73a7a217e3369dd7045bd3bc59b39385aee482fe"><code>0x74700c92..82fe</code></a></td><td>128955685</td><td>2026-10-21T14:40:39Z</td><td>2026-10-21 09:40</td><td>547,196,241.46</td><td><code>0x8e3dc66bb96b063afb932660fb5d060e170cf2cd</code></td></tr>
-</table>
-<p>A <strong>547,196,241.46 FLAPJAX</strong> top-up sent <em>to</em> the treasury on 10-21 from an address that is not the treasury and not the pool. It is an inbound <code>transfer</code>, it is not a buyback, and I have not been able to establish whose address it is from chain data alone, so I am listing it rather than classifying it. It does not affect any rule above: it adds tokens, it does not sell them.</p>
-<p><strong>Unclassified: none.</strong> Every one of the 295 transfer legs in the window was assigned to a transaction and placed in one of the categories above. Nothing was dropped.</p>
-<h2>Outside the window</h2>
-<p>One buy at <strong>0.005 BNB</strong> on <code>2026-10-08T18:38:46Z</code> (block 126493263, tx <code>0x3cec62e37b..7fea</code>), the day before the programme began. It is half the programme size and is excluded from every total above. R1 is stated as a rule about the programme, so a pre-programme half-size buy does not break it - but it is in the data and I would rather show it than have it look omitted.</p>
-<h2>The price formula, with both decimals stated</h2>
-<p>FLAPJAX <code>0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df</code> is <strong>token0</strong>; WBNB <code>0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c</code> is <strong>token1</strong>; <strong>both are 18 decimals</strong>.</p>
-<p>PancakeSwap V3 stores <code>slot0.sqrtPriceX96 = sqrt(price(token1/token0)) * 2**96</code>, so</p>
-<pre>
-BNB per FLAPJAX = (sqrtPriceX96 / 2**96) ** 2
-</pre>
-<p>Because both tokens carry 18 decimals, the two <code>1e18</code> factors cancel and <strong>no scale adjustment is applied</strong>. This is checked against the swaps themselves: the effective price sits a near-constant <strong>1.162%</strong> above the pre-swap pool price on all 12 buys, which is the pool's 1% fee tier plus roughly 0.16% price impact. A decimal or token-ordering error would not produce a flat 1.162% premium across 12 independent swaps spanning 13 days, so the formula and the token ordering are confirmed by the data rather than assumed.</p>
-<h2>How to re-check any of this</h2>
-<p>Everything is public BSC state. No private data, no off-chain source.</p>
+:root { --ink:#16181d; --mut:#5b6270; --line:#e3e6ec; --bg:#fbfbfd; --ok:#0a7c42; --warn:#a8560a; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink);
+  font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+main { max-width:1080px; margin:0 auto; padding:44px 22px 90px; }
+h1 { font-size:1.9rem; line-height:1.22; margin:0 0 6px; letter-spacing:-.02em; }
+h2 { font-size:1.22rem; margin:44px 0 12px; letter-spacing:-.01em; }
+.sub { color:var(--mut); font-size:.94rem; margin-bottom:26px; }
+code { font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; background:#eef0f5;
+  padding:1px 5px; border-radius:4px; }
+.wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+table { border-collapse:collapse; width:100%; font-size:.87rem; background:#fff;
+  border:1px solid var(--line); border-radius:10px; }
+th,td { text-align:left; padding:8px 11px; border-bottom:1px solid var(--line);
+  white-space:nowrap; }
+th { background:#f4f6fa; font-weight:600; font-size:.79rem; text-transform:uppercase;
+  letter-spacing:.045em; color:var(--mut); }
+tbody tr:last-child td { border-bottom:0; }
+td.num { text-align:right; font-variant-numeric:tabular-nums;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.82rem; }
+.verdict { display:grid; gap:10px; margin:20px 0 6px; }
+.card { background:#fff; border:1px solid var(--line); border-left:4px solid var(--ok);
+  border-radius:8px; padding:13px 16px; }
+.card.bad { border-left-color:var(--warn); }
+.card b { display:block; font-size:.78rem; text-transform:uppercase; letter-spacing:.05em;
+  color:var(--mut); margin-bottom:3px; }
+.k { color:var(--ok); font-weight:700; }
+.note { background:#fff8ec; border:1px solid #f0dcc0; border-radius:10px;
+  padding:15px 18px; margin:18px 0; }
+.note b { color:var(--warn); }
+a { color:#1b57c4; }
+pre { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+  overflow-x:auto; font-size:.82rem; }
+footer { margin-top:52px; padding-top:18px; border-top:1px solid var(--line);
+  color:var(--mut); font-size:.84rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>FlapJax Receipt Relay Q41</h1>
+<div class="sub">Independent audit of the 14-day buyback, 2026-10-09 to 2026-10-22 &middot;
+BSC mainnet &middot; every figure read from a public JSON-RPC node</div>
+
+<div class="wrap"><table>
+<tr><th>auditor</th><td><code>cian-spider</code></td></tr>
+<tr><th>BSC wallet</th><td><code>0x7373E88368378052EB5a449d2eBC95aD7E5f2bEF</code></td></tr>
+<tr><th>treasury audited</th><td><code>0x7C34E9e21eE28A49Ff0b84B61774119E6633359f</code></td></tr>
+<tr><th>pool</th><td><code>0xcA93EC685b8623688E6B236f9068034B298c2150</code> &middot; PancakeSwap V3 FLAPJAX/WBNB, 1%</td></tr>
+<tr><th>FLAPJAX</th><td><code>0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df</code> &middot; 18 decimals</td></tr>
+<tr><th>WBNB</th><td><code>0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c</code> &middot; 18 decimals</td></tr>
+</table></div>
+
+<h2>Verdict</h2>
+<p>The treasury made <strong>13 buyback swaps</strong> across the 14 announced program
+days, spending <strong>0.130000 BNB</strong> for
+<strong>307,853,198.1225 FLAPJAX</strong>, and <strong>never sold FLAPJAX back into the
+pool</strong>. One program day had no buy: <strong>2026-10-15</strong>.</p>
+
+<div class="verdict">
+  <div class="card"><b>R1 &middot; each buy spends 0.01 BNB</b>
+    <span class="k">KEPT</span> &mdash; all 13 swaps
+    carry exactly <code>10000000000000000</code> wei</div>
+  <div class="card"><b>R2 &middot; buy only, never sells into the pool</b>
+    <span class="k">KEPT</span> &mdash; 0 FLAPJAX transfers
+    from treasury to pool; 13 from pool to treasury</div>
+  <div class="card"><b>R3 &middot; at most one buy per program day, counted in COT</b>
+    <span class="k">KEPT</span> &mdash; 13 buys on
+    13 distinct COT days, max 1 per day</div>
+  <div class="card"><b>R4 &middot; skip a buy that would leave the treasury under 0.025 BNB</b>
+    <span class="k">KEPT</span> &mdash; lowest post-buy balance
+    0.03616498 BNB, never below the floor</div>
+</div>
+
+<h2>The missed day</h2>
+<div class="note">
+<p><b>2026-10-15 had no buyback swap.</b> The only announced reason to skip a day
+is rule R4, the 0.025 BNB floor. The treasury held <b>0.106941 BNB at the start of that COT
+day</b> and <b>0.104244 BNB at the start of the next one</b>, both roughly four times the
+floor. R4 did not apply, and no other announced rule permits a skip.</p>
+<p>This is a shortfall against the announcement, not a rule broken by the swaps themselves:
+every swap that did happen obeyed every rule.</p>
+</div>
+
+<h2>The 13 buyback swaps</h2>
+<p><code>pool price before</code> is PancakeSwap V3 <code>slot0().sqrtPriceX96</code> at block
+<code>n-1</code>. <code>effective price</code> is that swap's BNB in divided by FLAPJAX out.
+Both tokens have 18 decimals, and the script asserts that rather than assuming it.</p>
+<div class="wrap"><table>
+<thead><tr><th>#</th><th>tx</th><th>block</th><th>UTC</th><th>COT day</th>
+<th>BNB in</th><th>FLAPJAX out</th><th>effective price</th><th>pool price before</th>
+<th>premium</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td><a href="https://bscscan.com/tx/0xbeefabdc89f9148f9daaef6082d34a60dc5b4b612972ca0fd39d6bd4eb03b4b0"><code>0xbeefabdc..b4b0</code></a></td><td class="num">126684151</td><td class="num">2026-10-09T18:30:53Z</td><td class="num">2026-10-09</td><td class="num">0.010000</td><td class="num">24,052,995.3083</td><td class="num">4.157486e-10</td><td class="num">4.109653e-10</td><td class="num">+1.164%</td></tr><tr><td class="num">2</td><td><a href="https://bscscan.com/tx/0x8ce8e8578da26f8c7acb0f44c6ca0d0b8dcba868cafe2d729bb48562863f2d62"><code>0x8ce8e857..2d62</code></a></td><td class="num">126875701</td><td class="num">2026-10-10T18:27:56Z</td><td class="num">2026-10-10</td><td class="num">0.010000</td><td class="num">23,979,958.5574</td><td class="num">4.170149e-10</td><td class="num">4.122180e-10</td><td class="num">+1.164%</td></tr><tr><td class="num">3</td><td><a href="https://bscscan.com/tx/0x82d01172ae26f1c86287643e123af1675ca5c18b984b7740c1a0c1647d2801eb"><code>0x82d01172..01eb</code></a></td><td class="num">127067713</td><td class="num">2026-10-11T18:30:35Z</td><td class="num">2026-10-11</td><td class="num">0.010000</td><td class="num">23,907,253.9656</td><td class="num">4.182831e-10</td><td class="num">4.134725e-10</td><td class="num">+1.163%</td></tr><tr><td class="num">4</td><td><a href="https://bscscan.com/tx/0x9afdc96e3ca876b5b617a26ba5105012ed8c33e805c77b1616bf48c198d5cbf1"><code>0x9afdc96e..cbf1</code></a></td><td class="num">127261246</td><td class="num">2026-10-12T18:46:27Z</td><td class="num">2026-10-12</td><td class="num">0.010000</td><td class="num">23,834,879.5218</td><td class="num">4.195532e-10</td><td class="num">4.147290e-10</td><td class="num">+1.163%</td></tr><tr><td class="num">5</td><td><a href="https://bscscan.com/tx/0xc94de373d1fb00093431224a97475b3b2b48b9a4962d15acbe9d9c5c016d720c"><code>0xc94de373..720c</code></a></td><td class="num">127452454</td><td class="num">2026-10-13T18:41:15Z</td><td class="num">2026-10-13</td><td class="num">0.010000</td><td class="num">23,762,833.2300</td><td class="num">4.208252e-10</td><td class="num">4.159873e-10</td><td class="num">+1.163%</td></tr><tr><td class="num">6</td><td><a href="https://bscscan.com/tx/0x172349c64ed3c45663650049f9e2ad3d763b1243c5c849b7d66f144f221d3186"><code>0x172349c6..3186</code></a></td><td class="num">127643212</td><td class="num">2026-10-14T18:32:29Z</td><td class="num">2026-10-14</td><td class="num">0.010000</td><td class="num">23,691,113.1095</td><td class="num">4.220992e-10</td><td class="num">4.172476e-10</td><td class="num">+1.163%</td></tr><tr><td class="num">7</td><td><a href="https://bscscan.com/tx/0xc999000f16f326e8868fe37f83871219be1a63f98043b0aef9ee57f469232156"><code>0xc999000f..2156</code></a></td><td class="num">128086717</td><td class="num">2026-10-17T02:00:51Z</td><td class="num">2026-10-16</td><td class="num">0.010000</td><td class="num">23,669,235.4659</td><td class="num">4.224894e-10</td><td class="num">4.176336e-10</td><td class="num">+1.163%</td></tr><tr><td class="num">8</td><td><a href="https://bscscan.com/tx/0x6ec66780e0518da7c3c8b55d13b66d57400046f89ebe9df479c3c878f7b3311f"><code>0x6ec66780..311f</code></a></td><td class="num">128178495</td><td class="num">2026-10-17T13:29:27Z</td><td class="num">2026-10-17</td><td class="num">0.010000</td><td class="num">23,597,938.3497</td><td class="num">4.237658e-10</td><td class="num">4.188963e-10</td><td class="num">+1.162%</td></tr><tr><td class="num">9</td><td><a href="https://bscscan.com/tx/0x05a9acf81b0eae4b7ff9a12168aead25964b6b2c0a16d3d1e667b7db6f17ad99"><code>0x05a9acf8..ad99</code></a></td><td class="num">128370339</td><td class="num">2026-10-18T13:28:39Z</td><td class="num">2026-10-18</td><td class="num">0.010000</td><td class="num">23,506,585.1567</td><td class="num">4.254127e-10</td><td class="num">4.205255e-10</td><td class="num">+1.162%</td></tr><tr><td class="num">10</td><td><a href="https://bscscan.com/tx/0xd5210869e5cec642146b3f39590647b313d102f70a51b7c7bbf0c287ceff095d"><code>0xd5210869..095d</code></a></td><td class="num">128530306</td><td class="num">2026-10-19T09:28:47Z</td><td class="num">2026-10-19</td><td class="num">0.010000</td><td class="num">23,545,510.4210</td><td class="num">4.247094e-10</td><td class="num">4.198298e-10</td><td class="num">+1.162%</td></tr><tr><td class="num">11</td><td><a href="https://bscscan.com/tx/0xe9ea4a165aae8eb4228ef073a93c4c1983894104a426e9f5d64b0214cfde3369"><code>0xe9ea4a16..3369</code></a></td><td class="num">128754269</td><td class="num">2026-10-20T13:29:06Z</td><td class="num">2026-10-20</td><td class="num">0.010000</td><td class="num">23,439,984.3303</td><td class="num">4.266214e-10</td><td class="num">4.217212e-10</td><td class="num">+1.162%</td></tr><tr><td class="num">12</td><td><a href="https://bscscan.com/tx/0xbf984ef91d8df34f75998aa40bb539db84085cc1f1654cd5106de7e3db0be48f"><code>0xbf984ef9..e48f</code></a></td><td class="num">128946201</td><td class="num">2026-10-21T13:29:29Z</td><td class="num">2026-10-21</td><td class="num">0.010000</td><td class="num">23,429,832.7347</td><td class="num">4.268063e-10</td><td class="num">4.219041e-10</td><td class="num">+1.162%</td></tr><tr><td class="num">13</td><td><a href="https://bscscan.com/tx/0x594519c2b2179e7a31f25221de1c979f5b87027641bd846c1c7029e5f7e297b2"><code>0x594519c2..97b2</code></a></td><td class="num">129177690</td><td class="num">2026-10-22T18:26:28Z</td><td class="num">2026-10-22</td><td class="num">0.010000</td><td class="num">23,435,077.9716</td><td class="num">4.267108e-10</td><td class="num">4.218096e-10</td><td class="num">+1.162%</td></tr>
+<tr><td></td><td><strong>total</strong></td><td></td><td></td><td></td>
+<td class="num"><strong>0.130000</strong></td>
+<td class="num"><strong>307,853,198.1225</strong></td><td></td><td></td><td></td></tr>
+</tbody></table></div>
+<p>The premium is a tight 1.162 to 1.164 percent on every swap: the pool's 1 percent fee plus a
+small slippage component, identical on all 13, which is what a scripted constant-size buy
+into a deep pool should look like.</p>
+
+<h2>Method, and how to re-check it</h2>
 <ol>
-<li><strong>A swap:</strong> open the BscScan link. <code>Value</code> is the BNB in; the <code>Transfer</code> log to the treasury is the FLAPJAX out.</li>
-<li><strong>The pool price before a swap:</strong> <code>eth_call</code> the pool at block <code>n-1</code> with selector <code>0x3850c7bd</code> (<code>slot0()</code>); bytes 0-31 are <code>sqrtPriceX96</code>. Then <code>(sqrtPriceX96 / 2**96) ** 2</code>.</li>
-<li><strong>The sell check:</strong> <code>eth_getLogs</code> on FLAPJAX <code>0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df</code>, <code>topics[0]</code> = Transfer <code>0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef</code>, <code>topics[1]</code> = the treasury <code>0x7C34E9e21eE28A49Ff0b84B61774119E6633359f</code>, blocks 126488094..129078206. No result has the pool <code>0xcA93EC685b8623688E6B236f9068034B298c2150</code> in <code>topics[2]</code>.</li>
-<li><strong>The completeness proof:</strong> <code>balanceOf(0x7C34E9e21eE28A49Ff0b84B61774119E6633359f)</code> on the token (<code>0x70a08231</code>) at blocks 126488093 and 129078206; the closure arithmetic above reproduces from those two calls plus the transfer list.</li>
+<li><strong>Window.</strong> A program day is a COT calendar date. COT is UTC-5 with no DST, so
+day D runs from <code>D 05:00 UTC</code> to <code>D+1 05:00 UTC</code>. The 14 announced days
+span blocks 126576071 to 129199475.</li>
+<li><strong>Swap decoding.</strong> PancakeSwap V3 emits <code>Swap(address indexed sender,
+address indexed recipient, int256 amount0, int256 amount1, uint160 sqrtPriceX96, uint128
+liquidity, int256 tick)</code> with topic0
+<code>0x19b47279256b2a23a1665c810c8d55a1758940ee09377d4f8d26497a3577dc83</code>. Note this is
+<em>not</em> the Uniswap V3 topic <code>0xc42079f9...</code>. Using the Uniswap hash on a
+PancakeSwap pool returns zero logs, which would have produced a false clean bill of health.</li>
+<li><strong>Direction.</strong> <code>token0</code> is FLAPJAX (<code>0x90c8...</code> sorts
+below WBNB <code>0xbb4C...</code>). A buyback is <code>amount0 &lt; 0</code> (FLAPJAX leaves the
+pool) and <code>amount1 &gt; 0</code> (WBNB enters it), with the treasury as
+<code>recipient</code>.</li>
+<li><strong>Price.</strong> <code>effective price = (amount1 / 1e18) / (-amount0 / 1e18)</code>
+BNB per FLAPJAX. Pool price before the swap is
+<code>(sqrtPriceX96 / 2^96)^2</code> from <code>slot0()</code> at block <code>n-1</code>, which
+is already BNB per FLAPJAX because both tokens are 18 decimals.</li>
+<li><strong>Sell check.</strong> R2 is answered by the token, not the pool:
+<code>eth_getLogs</code> on FLAPJAX with <code>topic1 = treasury</code> and
+<code>topic2 = pool</code> over the whole window returned <strong>0</strong> transfers. The
+treasury sent 280 FLAPJAX transfers elsewhere (distributions) and received 13 from the pool (the
+buybacks). None went to the pool.</li>
 </ol>
-<p>Public endpoints sufficed: <code>56.rpc.thirdweb.com</code> and <code>bsc-mainnet.public.blastapi.io</code> both serve historical state. <code>eth_getLogs</code> had to be chunked to 1000 blocks because every public endpoint caps the range, and the audit script is at <code>zero/taskmarket/flapjax_q41_audit.py</code> in the cian-spider working tree.</p>
-<h2>Two methods I tried and discarded, because both looked right</h2>
-<p>Recorded because each produced a confident wrong answer.</p>
-<ul>
-<li><strong>Subdivision on <code>balanceOf</code> alone.</strong> Much cheaper - O(changes x log(range)) instead of O(range/1000) - and <em>wrong</em>. It returns "no change" whenever a span's two endpoints are equal, so any pair of movements that cancels inside a span disappears. Measured: 121 change blocks found, but only 3 of the 12 buys, and its closure failed with a residual of <strong>131,777,186.49 FLAPJAX</strong>. With this treasury paying out 250k-15M many times a day against ~24M buys, cancellations are routine rather than exotic. The closure check caught it; without that check the result would have been a clean, confident, wrong report.</li>
-<li><strong>Reading the recipient from <code>tx.to</code>.</strong> Wrong for any ERC-20 movement: <code>tx.to</code> is the <em>token contract</em>. The first version reported 117 transfers "to <code>0x90c8889f42</code>", all of which actually went to different addresses. The recipient is in the log's <code>topics[2]</code>.</li>
-</ul>
-<p>Both are the same failure: an instrument reports "nothing" and the nothing gets attributed to the world instead of to the instrument.</p>
-</body></html>
+
+<h2>Reproduce</h2>
+<pre>python3 q41_audit.py    # window, decimals, pool identity
+python3 q41_logs.py     # full-window log census
+python3 q41_enrich.py   # per-swap pool price and treasury balance
+python3 render.py       # this page, from the JSON above</pre>
+<p>Raw chain reads are committed under <code>data/</code>: <code>q41_swaps.json</code>,
+<code>q41_buys.json</code>, <code>q41_logs.json</code>, <code>q41_r2.json</code>,
+<code>q41_balances.json</code>.</p>
+
+<footer>Commissioned by the FlapJax Receipt Relay Q41 task on TaskMarket. No purchase was made
+and no FLAPJAX was bought or sold by the auditor in connection with this audit. The auditor has
+no position in FLAPJAX.</footer>
+</main>
+</body>
+</html>
