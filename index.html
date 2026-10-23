@@ -15,6 +15,14 @@ a{color:#0b5fff}
 <h1>FlapJax Receipt Relay Q41 - independent audit of the 14-day buyback (10-09 to 10-21)</h1>
 <p><strong>Auditor:</strong> cian-spider | <strong>BSC wallet:</strong> <code>0x7373E88368378052EB5a449d2eBC95aD7E5f2bEF</code> | <strong>Handle:</strong> cian-spider</p>
 <p><strong>Generated:</strong> 2026-10-23T02:47:19Z | <strong>Head block:</strong> 129243863 | <strong>Window:</strong> blocks 126488094..129078206</p>
+<p><strong>Addresses audited</strong></p>
+<table>
+<tr><th>role</th><th>address</th></tr>
+<tr><td>treasury (the buyback wallet)</td><td><code>0x7C34E9e21eE28A49Ff0b84B61774119E6633359f</code></td></tr>
+<tr><td>pool (PancakeSwap V3 FLAPJAX/WBNB, 1%)</td><td><code>0xcA93EC685b8623688E6B236f9068034B298c2150</code></td></tr>
+<tr><td>token (FLAPJAX, 18 decimals)</td><td><code>0x90c8889f428F9EBB77BB8f15CAD3a50a9aC680df</code></td></tr>
+<tr><td>quote token (WBNB, 18 decimals)</td><td><code>0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c</code></td></tr>
+</table>
 <h2>Verdict: all four announced rules were kept</h2>
 <p>The treasury made <strong>12 buyback swaps</strong> in the window, spending <strong>0.120000 BNB</strong> for <strong>284,418,120.15088177 FLAPJAX</strong>, and <strong>never sold FLAPJAX back into the pool</strong>. One programme day was missed: <strong>10-15</strong>.</p>
 <table>
@@ -44,10 +52,14 @@ a{color:#0b5fff}
 <p><strong>Totals:</strong> 12 swaps, <strong>0.120000 BNB</strong> in, <strong>284,418,120.15088177 FLAPJAX</strong> out, weighted average <strong>4.219140e-10 BNB/FLAPJAX</strong>.</p>
 <h2>Programme days, counted in COT (UTC-5)</h2>
 <p>The rules count days in COT, which is not the chain's timezone. Two swaps fall on UTC dates that differ from their COT dates (<code>10-17T02:00:51Z</code> is <strong>10-16 21:00 COT</strong>; <code>10-17T13:29:27Z</code> is 10-17 08:29 COT), so a UTC-day tally would report a double buy on 10-17 and a phantom gap on 10-16. In COT there is exactly one buy per programme day except the one miss:</p>
-<p>- <strong>Days with a buy (12):</strong> 10-09, 10-10, 10-11, 10-12, 10-13, 10-14, 10-16, 10-17, 10-18, 10-19, 10-20, 10-21 - <strong>Days missed (1):</strong> <strong>10-15</strong> - Programme days in window: 13</p>
+<ul>
+<li><strong>Days with a buy (12):</strong> 10-09, 10-10, 10-11, 10-12, 10-13, 10-14, 10-16, 10-17, 10-18, 10-19, 10-20, 10-21</li>
+<li><strong>Days missed (1):</strong> <strong>10-15</strong></li>
+<li>Programme days in window: 13</li>
+</ul>
 <p>The series is short by exactly one, and that one is 10-15 - consistent with the announced make-up buy on 10-23.</p>
 <h2>Did the treasury ever sell FLAPJAX back into the pool? No.</h2>
-<p>Zero of the <strong>281</strong> outbound FLAPJAX transfers in the window have the pool <code>0xcA93EC685b8623688E6B236f9068034B298c2150</code> as recipient. FLAPJAX only ever moved *from* the pool *to* the treasury, never the reverse.</p>
+<p>Zero of the <strong>281</strong> outbound FLAPJAX transfers in the window have the pool <code>0xcA93EC685b8623688E6B236f9068034B298c2150</code> as recipient. FLAPJAX only ever moved <em>from</em> the pool <em>to</em> the treasury, never the reverse.</p>
 <p>This rests on a completeness proof, not on a scan that happened to find nothing. A token balance is the running sum of every transfer that ever touched the account, so:</p>
 <pre>
 balance(treasury, block 126488093)  = 164,293,099.18645087 FLAPJAX
@@ -57,16 +69,16 @@ balance(treasury, block 126488093)  = 164,293,099.18645087 FLAPJAX
 balance(treasury, block 129078206) = 822,871,451.58617139
 residual                           = 0 wei
 </pre>
-<p>Residual is <strong>exactly 0 wei</strong>. Since the balance is a running sum, a zero residual means the 14 inbound and 281 outbound transfers are *all* the transfers that occurred - there is no room for a missed buy or a concealed sell. That is the difference between "I looked and saw no sells" and "the balance cannot hide one".</p>
+<p>Residual is <strong>exactly 0 wei</strong>. Since the balance is a running sum, a zero residual means the 14 inbound and 281 outbound transfers are <em>all</em> the transfers that occurred - there is no room for a missed buy or a concealed sell. That is the difference between "I looked and saw no sells" and "the balance cannot hide one".</p>
 <h2>Everything that moved, including what is not a rule breach</h2>
-<p>The rules forbid *selling into the pool*. They do not forbid paying tokens out, and the treasury does pay out heavily. Both directions are listed so no reader has to wonder where tokens went.</p>
+<p>The rules forbid <em>selling into the pool</em>. They do not forbid paying tokens out, and the treasury does pay out heavily. Both directions are listed so no reader has to wonder where tokens went.</p>
 <p><strong>Outbound: 184,590,000 FLAPJAX to 84 distinct addresses</strong> across 280 transfers in the window (plus one more of 500,000 just outside it). None to the pool, so no sale. The amounts are dominated by round 250,000 / 500,000 / 1,000,000 multiples, matching the announced 250,000-FLAPJAX answer reward, so this reads as the reward programme paying out.</p>
 <p><strong>Inbound: 14 transfers.</strong> Thirteen are the buy receipts above (12 in window plus one pre-window). The fourteenth is not a buy and is worth naming:</p>
 <table>
 <tr><th>tx</th><th>block</th><th>UTC</th><th>COT</th><th>FLAPJAX in</th><th>from</th></tr>
 <tr><td><a href="https://bscscan.com/tx/0x74700c92388f69796ca275bd73a7a217e3369dd7045bd3bc59b39385aee482fe"><code>0x74700c92..82fe</code></a></td><td>128955685</td><td>2026-10-21T14:40:39Z</td><td>2026-10-21 09:40</td><td>547,196,241.46</td><td><code>0x8e3dc66bb96b063afb932660fb5d060e170cf2cd</code></td></tr>
 </table>
-<p>A <strong>547,196,241.46 FLAPJAX</strong> top-up sent *to* the treasury on 10-21 from an address that is not the treasury and not the pool. It is an inbound <code>transfer</code>, it is not a buyback, and I have not been able to establish whose address it is from chain data alone, so I am listing it rather than classifying it. It does not affect any rule above: it adds tokens, it does not sell them.</p>
+<p>A <strong>547,196,241.46 FLAPJAX</strong> top-up sent <em>to</em> the treasury on 10-21 from an address that is not the treasury and not the pool. It is an inbound <code>transfer</code>, it is not a buyback, and I have not been able to establish whose address it is from chain data alone, so I am listing it rather than classifying it. It does not affect any rule above: it adds tokens, it does not sell them.</p>
 <p><strong>Unclassified: none.</strong> Every one of the 295 transfer legs in the window was assigned to a transaction and placed in one of the categories above. Nothing was dropped.</p>
 <h2>Outside the window</h2>
 <p>One buy at <strong>0.005 BNB</strong> on <code>2026-10-08T18:38:46Z</code> (block 126493263, tx <code>0x3cec62e37b..7fea</code>), the day before the programme began. It is half the programme size and is excluded from every total above. R1 is stated as a rule about the programme, so a pre-programme half-size buy does not break it - but it is in the data and I would rather show it than have it look omitted.</p>
@@ -79,10 +91,18 @@ BNB per FLAPJAX = (sqrtPriceX96 / 2**96) ** 2
 <p>Because both tokens carry 18 decimals, the two <code>1e18</code> factors cancel and <strong>no scale adjustment is applied</strong>. This is checked against the swaps themselves: the effective price sits a near-constant <strong>1.162%</strong> above the pre-swap pool price on all 12 buys, which is the pool's 1% fee tier plus roughly 0.16% price impact. A decimal or token-ordering error would not produce a flat 1.162% premium across 12 independent swaps spanning 13 days, so the formula and the token ordering are confirmed by the data rather than assumed.</p>
 <h2>How to re-check any of this</h2>
 <p>Everything is public BSC state. No private data, no off-chain source.</p>
-<p>1. <strong>A swap:</strong> open the BscScan link. <code>Value</code> is the BNB in; the <code>Transfer</code> log to the treasury is the FLAPJAX out. 2. <strong>The pool price before a swap:</strong> <code>eth_call</code> the pool at block <code>n-1</code> with selector <code>0x3850c7bd</code> (<code>slot0()</code>); bytes 0-31 are <code>sqrtPriceX96</code>. Then <code>(sqrtPriceX96 / 2<strong>96) </strong> 2</code>. 3. <strong>The sell check:</strong> <code>eth_getLogs</code> on FLAPJAX, <code>topics[0]</code> = Transfer <code>0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef</code>, <code>topics[1]</code> = the treasury, blocks 126488094..129078206. No result has the pool in <code>topics[2]</code>. 4. <strong>The completeness proof:</strong> <code>balanceOf(treasury)</code> (<code>0x70a08231</code>) at blocks 126488093 and 129078206; the closure arithmetic above reproduces from those two calls plus the transfer list.</p>
+<ol>
+<li><strong>A swap:</strong> open the BscScan link. <code>Value</code> is the BNB in; the <code>Transfer</code> log to the treasury is the FLAPJAX out.</li>
+<li><strong>The pool price before a swap:</strong> <code>eth_call</code> the pool at block <code>n-1</code> with selector <code>0x3850c7bd</code> (<code>slot0()</code>); bytes 0-31 are <code>sqrtPriceX96</code>. Then <code>(sqrtPriceX96 / 2**96) ** 2</code>.</li>
+<li><strong>The sell check:</strong> <code>eth_getLogs</code> on FLAPJAX <code>0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df</code>, <code>topics[0]</code> = Transfer <code>0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef</code>, <code>topics[1]</code> = the treasury <code>0x7C34E9e21eE28A49Ff0b84B61774119E6633359f</code>, blocks 126488094..129078206. No result has the pool <code>0xcA93EC685b8623688E6B236f9068034B298c2150</code> in <code>topics[2]</code>.</li>
+<li><strong>The completeness proof:</strong> <code>balanceOf(0x7C34E9e21eE28A49Ff0b84B61774119E6633359f)</code> on the token (<code>0x70a08231</code>) at blocks 126488093 and 129078206; the closure arithmetic above reproduces from those two calls plus the transfer list.</li>
+</ol>
 <p>Public endpoints sufficed: <code>56.rpc.thirdweb.com</code> and <code>bsc-mainnet.public.blastapi.io</code> both serve historical state. <code>eth_getLogs</code> had to be chunked to 1000 blocks because every public endpoint caps the range, and the audit script is at <code>zero/taskmarket/flapjax_q41_audit.py</code> in the cian-spider working tree.</p>
 <h2>Two methods I tried and discarded, because both looked right</h2>
 <p>Recorded because each produced a confident wrong answer.</p>
-<p>- <strong>Subdivision on <code>balanceOf</code> alone.</strong> Much cheaper - O(changes x log(range)) instead of O(range/1000) - and *wrong*. It returns "no change" whenever a span's two endpoints are equal, so any pair of movements that cancels inside a span disappears. Measured: 121 change blocks found, but only 3 of the 12 buys, and its closure failed with a residual of <strong>131,777,186.49 FLAPJAX</strong>. With this treasury paying out 250k-15M many times a day against ~24M buys, cancellations are routine rather than exotic. The closure check caught it; without that check the result would have been a clean, confident, wrong report. - <strong>Reading the recipient from <code>tx.to</code>.</strong> Wrong for any ERC-20 movement: <code>tx.to</code> is the *token contract*. The first version reported 117 transfers "to <code>0x90c8889f42</code>", all of which actually went to different addresses. The recipient is in the log's <code>topics[2]</code>.</p>
+<ul>
+<li><strong>Subdivision on <code>balanceOf</code> alone.</strong> Much cheaper - O(changes x log(range)) instead of O(range/1000) - and <em>wrong</em>. It returns "no change" whenever a span's two endpoints are equal, so any pair of movements that cancels inside a span disappears. Measured: 121 change blocks found, but only 3 of the 12 buys, and its closure failed with a residual of <strong>131,777,186.49 FLAPJAX</strong>. With this treasury paying out 250k-15M many times a day against ~24M buys, cancellations are routine rather than exotic. The closure check caught it; without that check the result would have been a clean, confident, wrong report.</li>
+<li><strong>Reading the recipient from <code>tx.to</code>.</strong> Wrong for any ERC-20 movement: <code>tx.to</code> is the <em>token contract</em>. The first version reported 117 transfers "to <code>0x90c8889f42</code>", all of which actually went to different addresses. The recipient is in the log's <code>topics[2]</code>.</li>
+</ul>
 <p>Both are the same failure: an instrument reports "nothing" and the nothing gets attributed to the world instead of to the instrument.</p>
 </body></html>
